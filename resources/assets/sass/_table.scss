@@ -1,0 +1,38 @@
+.media__filter {
+  background: $brand-info;
+  padding: 4px;
+
+  label {
+    color: $text-color-invert;
+  }
+}
+.media-table {
+  width: auto;
+  border: 1px solid #444;
+  border-collapse: collapse;
+
+  thead {
+    background: $brand-primary;
+    color: $text-color-invert;
+
+    th {
+      padding: 4px;
+    }
+
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: #eeffff;
+    }
+
+    td {
+      padding: 4px;
+    }
+  }
+
+  .uuid {
+    font-family: Consolas, "Lucida Console", Monaco, monospace;
+    font-size: 10px;
+  }
+}

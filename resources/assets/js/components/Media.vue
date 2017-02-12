@@ -2,11 +2,15 @@
   <div class="row">
     <div class="container">
       <div class="media__filter">
+
         <label>Filter</label>
         <select v-model="status" @change="reloadMedia">
           <option value="200">Valid pictures</option>
           <option value="404">Not found</option>
         </select>
+
+        <label>records</label>
+        <input v-model="limit" @change="reloadMedia"/>
       </div>
       <div class="media-table">
         <table>
@@ -44,7 +48,8 @@
       return {
         media: [],
         selected: false,
-        status: 200
+        status: 200,
+        limit: 1000
       };
     },
 
@@ -73,7 +78,7 @@
       reloadMedia() {
         var self = this;
 
-        axios.get('/1.0/media?status=' + self.status).then(function(response) {
+        axios.get('/1.0/media?status=' + self.status + '&limit=' + parseInt(self.limit)).then(function(response) {
           if ( response.status === 200 ) {
             self.media = response.data;
           }

@@ -12184,6 +12184,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -12192,7 +12196,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       media: [],
       selected: false,
-      status: 200
+      status: 200,
+      limit: 1000
     };
   },
 
@@ -12220,7 +12225,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     reloadMedia: function reloadMedia() {
       var self = this;
 
-      axios.get('/1.0/media?status=' + self.status).then(function (response) {
+      axios.get('/1.0/media?status=' + self.status + '&limit=' + parseInt(self.limit)).then(function (response) {
         if (response.status === 200) {
           self.media = response.data;
         }
@@ -31963,7 +31968,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "value": "404"
     }
-  }, [_vm._v("Not found")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Not found")])]), _vm._v(" "), _c('label', [_vm._v("records")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.limit),
+      expression: "limit"
+    }],
+    domProps: {
+      "value": _vm._s(_vm.limit)
+    },
+    on: {
+      "change": _vm.reloadMedia,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.limit = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
     staticClass: "media-table"
   }, [_c('table', [_c('col', {
     attrs: {

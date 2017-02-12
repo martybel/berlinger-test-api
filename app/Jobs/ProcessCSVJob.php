@@ -48,7 +48,7 @@ class ProcessCSVJob implements ShouldQueue
     public function storeMedia($mediaRecord)
     {
       // Only accept those with valid URL's
-      if ( filter_var($mediaRecord['picture_url'],FILTER_VALIDATE_URL|FILTER_FLAG_SCHEME_REQUIRED|FILTER_FLAG_HOST_REQUIRED) ) {
+      if ( filter_var($mediaRecord['picture_url'],FILTER_VALIDATE_URL) ) {
         Media::createFromInput($mediaRecord);
       }
     }

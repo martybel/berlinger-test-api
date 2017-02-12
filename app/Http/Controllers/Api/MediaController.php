@@ -7,7 +7,6 @@ use App\Models\Media;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
-use App\Models\MediaMeta;
 
 /**
  * Api Endpoint for all Media related queries

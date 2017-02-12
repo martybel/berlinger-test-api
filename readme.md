@@ -1,40 +1,59 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## Berlinger Api Test
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This is my implementation of the Berlinger API test assignment. The task
+described, requires an upload endpoint where CSV files in a specific format
+can be uploaded, and 2 endpoints for retrieving information.
 
-## About Laravel
+## Solution
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+My Solution is built using the Laravel Framework and has a very simplistic 
+front-end to make debugging a bit easier.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+My solution has a CSV upload which will do a simple preliminary check to see
+if all required fields are present in the CSV. If not, then it will not accept
+the upload.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+If the upload is accepted, it will pass it on to a background job which will
+do the actual import. I seperated this so to avoid HTTP timeouts or long waits
+for the API. This should make the API a bit more robust.
 
-## Learning Laravel
+The background job will parse all records and validate them so only ones
+with a valid URL get processed. Since the others won't yield a valid image
+i reject them from storing.
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+When making a local copy i check if the copy was succesful. If so, it will
+make then available online by default. Otherwise the record will be stored,
+but with a remark stating that the original file could not be found.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+All pictures stored will have two unique identifiers: their "title" (as per
+spec), and an auto generated "uuid". Information of a specific picture
+can be obtained by using either one.
 
-## Contributing
+## API Endpoints
+The API endpoints have CSRF protection in place. This is something that is 
+enabled by default when using Laravel. To avoid misuse, this is not a 
+"bad thing". Laravel also has throttling enabled by default. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+<b>POST /1.0/csv/upload</b>
 
-## Security Vulnerabilities
+CSV/upload handles the upload of CSV files to the site.The file is expected in 
+a parameter called 'csv'. furthermore you need to pass along the CSRF token.
+ 
+When uploaded succesfully, it will return the "batch" number used for the
+ import background job.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+<b>GET /1.0/media/</b>
 
-## License
+Will return a list of all objects in the database including all their metadata
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+<b>GET /1.0/media/{slug}></b>
+
+Will display the image of {slug}
+
+<b>GET /1.0/media/info/{slug}</b>
+
+Will display the meta information of a single item identified by {slug}
+
+## Extra
+
+The front-end is built using Vue. This may also help you loading/testing the data.

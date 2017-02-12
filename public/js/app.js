@@ -12183,6 +12183,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -31962,11 +31963,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "value": "404"
     }
-  }, [_vm._v("Not found")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "400"
-    }
-  }, [_vm._v("Invalid")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Not found")])])]), _vm._v(" "), _c('div', {
     staticClass: "media-table"
   }, [_c('table', [_c('col', {
     attrs: {
@@ -32004,7 +32001,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('th', [_vm._v("UUID")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Location")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("UUID")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Location")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

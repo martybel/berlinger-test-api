@@ -6,7 +6,6 @@
         <select v-model="status" @change="reloadMedia">
           <option value="200">Valid pictures</option>
           <option value="404">Not found</option>
-          <option value="400">Invalid</option>
         </select>
       </div>
       <div class="media-table">
@@ -16,10 +15,12 @@
           <col width="30%">
           <col width="10%">
           <thead>
-          <th>UUID</th>
-          <th>Title</th>
-          <th>Location</th>
-          <th>Actions</th>
+          <tr>
+            <th>UUID</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
           </thead>
           <tbody>
           <tr v-for="row in media">

@@ -1,5 +1,5 @@
 <template>
-  <div id="previewModal" class="modal fade" v-if="uuid">
+  <div id="previewModal" class="modal fade" aria-hidden="true" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -38,7 +38,7 @@
 
     watch: {
       'uuid': function(val) {
-        console.log('watch ' + val);
+
         var self = this;
 
         axios.get('/1.0/media/info/' + val).then((response) => {
@@ -49,8 +49,5 @@
       }
     },
 
-    mounted() {
-      $('#previewModal').modal();
-    }
   }
 </script>

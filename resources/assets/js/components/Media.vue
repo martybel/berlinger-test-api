@@ -26,7 +26,7 @@
             <td class="uuid">{{ row.uuid }}</td>
             <td>{{ row.title }}</td>
             <td>{{ row.url }}</td>
-            <td><button class="btn btn-default" @click="showImage(row.uuid)">View</button></td>
+            <td><button class="btn btn-default" data-toggle="modal" @click="showImage(row.uuid)">View</button></td>
           </tr>
           </tbody>
         </table>
@@ -59,11 +59,13 @@
           self.media = response.data;
         }
       });
+
     },
 
     methods: {
       showImage(uuid) {
         this.selected = uuid;
+        console.log("Showing");
         $('#previewModal').modal('show');
       },
 

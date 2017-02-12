@@ -34,8 +34,15 @@ class ProcessCSVJob implements ShouldQueue
      */
     public function handle()
     {
-      $reader = new CSVReader(storage_path('app/csv/'. $this->uuid . '.csv'));
-      $reader->each([$this,'StoreMedia']);
+      $csv    = storage_path('app/csv/'. $this->uuid . '.csv');
+
+      if ( file_exists($csv) ) {
+        $reader = new CSVReader($csv);
+        $reader->each([$this,'StoreMedia']);
+
+        unlink($csv);
+      }
+      return true;
     }
 
     public function storeMedia($mediaRecord)

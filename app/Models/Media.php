@@ -21,6 +21,10 @@ class Media extends Model
       return $this->hasMany('App\\Models\\MediaMeta','media_id','id');
     }
 
+    /**
+     * Creates a local copy of a remote file
+     *
+     */
     public function checkLocalCopy()
     {
       if ( !$this->imported && $this->status === null ) {
@@ -50,11 +54,20 @@ class Media extends Model
         $this->save();
 
         if ($this->status === 404) {
+          // Remove bogus files
           unlink($full);
         }
+
+        curl_close($ch);
       }
     }
 
+    /**
+     * Creates a new media record, or updates an existing one based on the title
+     *
+     * @param   array $input
+     * @return  Media
+     */
     static public function createFromInput($input)
     {
       try {
@@ -98,12 +111,18 @@ class Media extends Model
       return $media;
     }
 
+    /**
+     * Create a dot<ext> string if the original file had one
+     *
+     * @param $path
+     * @return string
+     */
     protected function getPathExtension($path)
     {
-      $path = parse_url($path,PHP_URL_PATH);
+      $ext = File::extension($path);
 
-      if ( strrpos($path,'.')) {
-        return substr($path,strrpos($path,'.'));
+      if ( $ext ) {
+        return '.' . $ext;
       }
       return '';
     }

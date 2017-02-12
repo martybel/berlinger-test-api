@@ -12213,6 +12213,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     showImage: function showImage(uuid) {
       this.selected = uuid;
+      console.log("Showing");
       $('#previewModal').modal('show');
     },
     reloadMedia: function reloadMedia() {
@@ -12234,6 +12235,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -31987,6 +31989,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "uuid"
     }, [_vm._v(_vm._s(row.uuid))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(row.title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(row.url))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-default",
+      attrs: {
+        "data-toggle": "modal"
+      },
       on: {
         "click": function($event) {
           _vm.showImage(row.uuid)
@@ -32037,7 +32042,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "container"
-  }, [_c('fieldset', [(!_vm.batch) ? _c('div', [_c('h1', [_vm._v("Upload your CSV")]), _vm._v(" "), _c('form', {
+  }, [_c('fieldset', {
+    staticClass: "csvupload"
+  }, [(!_vm.batch) ? _c('div', [_c('h1', [_vm._v("Upload your CSV")]), _vm._v(" "), _c('form', {
     attrs: {
       "id": "uploadForm",
       "method": "post",
@@ -32058,12 +32065,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.token
     }
-  }), _vm._v(" "), _c('input', {
+  }), _vm._v(" "), _c('label', {
     attrs: {
+      "for": "csvfile"
+    }
+  }, [_vm._v("Your CSV")]), _vm._v(" "), _c('input', {
+    attrs: {
+      "id": "csvfile",
       "type": "file",
       "name": "csv"
     }
   }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
     attrs: {
       "type": "submit"
     }
@@ -42240,7 +42253,7 @@ module.exports = __webpack_require__(12);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -42282,7 +42295,7 @@ module.exports = __webpack_require__(12);
 
   watch: {
     'uuid': function uuid(val) {
-      console.log('watch ' + val);
+
       var self = this;
 
       axios.get('/1.0/media/info/' + val).then(function (response) {
@@ -42291,13 +42304,9 @@ module.exports = __webpack_require__(12);
         }
       });
     }
-  },
-
-  mounted: function mounted() {
-    $('#previewModal').modal();
   }
+
 };
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 57 */
@@ -42338,10 +42347,12 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.uuid) ? _c('div', {
+  return _c('div', {
     staticClass: "modal fade",
     attrs: {
-      "id": "previewModal"
+      "id": "previewModal",
+      "aria-hidden": "true",
+      "role": "dialog"
     }
   }, [_c('div', {
     staticClass: "modal-dialog",
@@ -42365,7 +42376,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "href": prop
       }
     }, [_vm._v(_vm._s(prop))]) : _c('span', [_vm._v(_vm._s(prop))])])
-  }))]), _vm._v(" "), _vm._m(1)])])]) : _vm._e()
+  }))]), _vm._v(" "), _vm._m(1)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"

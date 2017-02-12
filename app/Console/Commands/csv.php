@@ -6,6 +6,10 @@ use Illuminate\Console\Command;
 use App\CSVReader;
 use App\Models\Media;
 
+/**
+ * Command line wrapper to test the CSV import
+ * @package App\Console\Commands
+ */
 class csv extends Command
 {
     /**

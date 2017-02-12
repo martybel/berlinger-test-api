@@ -8,7 +8,11 @@ namespace App;
 
 use League\Csv\Reader;
 
-
+/**
+ * Wrapper around CVSReader to clean up the source CSV as much as possible
+ *
+ * @package App
+ */
 class CSVReader
 {
   /**
@@ -16,20 +20,30 @@ class CSVReader
    */
   protected $reader;
 
+  /**
+   * CSVReader constructor.
+   * @param string $file
+   */
   public function __construct($file)
   {
+    // Assume end user does not comply with normal standards
     if ( file_exists($file) ) {
       if (!ini_get("auto_detect_line_endings")) {
         ini_set("auto_detect_line_endings", '1');
       }
 
       $this->reader = Reader::createFromPath($file);
-      $this->reader->setDelimiter('|');
+      $this->reader->setDelimiter('|');   // As per spec
     } else {
       throw new \BadMethodCallException('File not found ' . $file);
     }
   }
 
+  /**
+   * Read the header line from the CSV
+   *
+   * @return array
+   */
   public function getHeader()
   {
     $header = $this->reader->fetchOne(0);
@@ -38,6 +52,11 @@ class CSVReader
     return $header;
   }
 
+  /**
+   * Loop through all entries and call callback for all entries that comply with the header
+   *
+   * @param $callable
+   */
   public function each($callable)
   {
     if ( !is_callable($callable)) {

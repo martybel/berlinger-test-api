@@ -9,11 +9,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\ProcessCSVJob;
-use App\Models\Media;
 use App\Validators\CSVValidator;
 use Illuminate\Http\Request;
 use Webpatser\Uuid\Uuid;
 
+/**
+ * CSV API Calls
+ *
+ * @package App\Http\Controllers\Api
+ */
 class CSVController extends Controller
 {
   public function upload(Request $request)
@@ -24,6 +28,7 @@ class CSVController extends Controller
       $validator = new CSVValidator($file->getPathname());
 
       if ( $validator->validHeader() ) {
+        // Store file with a UUID to avoid filename conflicts
         $csvTarget = Uuid::generate()->string;
 
         $request->csv->storeAs('csv',$csvTarget . '.csv');

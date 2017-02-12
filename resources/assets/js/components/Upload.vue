@@ -1,14 +1,15 @@
 <template>
   <div class="row">
     <div class="container">
-      <fieldset>
+      <fieldset class="csvupload">
 
       <div v-if="!batch">
         <h1>Upload your CSV</h1>
         <form id="uploadForm" method="post" enctype="multipart/form-data" action="/1.0/csv/upload" @submit.prevent="postSubmit">
           <input type="hidden" name="_token" :value="token"/>
-          <input type="file" name="csv" />
-          <button type="submit">Send File</button>
+          <label for="csvfile">Your CSV</label>
+          <input id="csvfile" type="file" name="csv" />
+          <button type="submit" class="btn btn-primary">Send File</button>
         </form>
       </div>
       <div v-else>

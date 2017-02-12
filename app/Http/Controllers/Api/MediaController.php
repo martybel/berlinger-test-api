@@ -9,8 +9,24 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\MediaMeta;
 
+/**
+ * Api Endpoint for all Media related queries
+ *
+ * @package App\Http\Controllers\Api
+ */
 class MediaController extends Controller
 {
+  /**
+   * Returns a list of all available media items
+   * To avoid getting too big responses, all responses are chunked into 1000 records a time (default)
+   * You can change this by using the offset and limit parameters.
+   *
+   * By default it will also only show pictures which were downloaded succesfully (HTTP 200). But you
+   * can change this by using the status parameter.
+   *
+   * @param Request $request
+   * @return \Illuminate\Contracts\Routing\ResponseFactory
+   */
   public function getAll(Request $request)
   {
     $offset = $request->input('offset',0);
@@ -31,10 +47,17 @@ class MediaController extends Controller
     return response($result);
   }
 
+  /**
+   * Displays the image/media file
+   *
+   * @param $uid
+   * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+   */
   public function getOne($uid)
   {
-    try {
-      $media = Media::where('uuid',$uid)->firstOrFail();
+    $media = $this->getMediaByIdentifier($uid);
+
+    if ( $media ) {
       $path  = storage_path($media->local);
 
       if ( File::exists($path)) {
@@ -43,23 +66,49 @@ class MediaController extends Controller
         return $response;
       }
       abort(500);
+    }
+    abort(404);
 
-    } catch (ModelNotFoundException $m) {
+  }
+
+  /**
+   * Get information based on the UUID or title
+   *
+   * @param $uid
+   * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+   */
+  public function getInfo($uid)
+  {
+    $media = $this->getMediaByIdentifier($uid);
+
+    if ( $media ) {
+      return response($this->getMediaInfo($media));
     }
     abort(404);
   }
 
-  public function getInfo($uid)
+  /**
+   * Locates an media item based on the UUID or title
+   * @param $id
+   * @return mixed
+   */
+  protected function getMediaByIdentifier($id)
   {
-    try {
-      $media = Media::where('uuid', $uid)->firstOrFail();
 
-      return response($this->getMediaInfo($media));
-    } catch (ModelNotFoundException $m) {
-      abort(404);
+    try {
+      $media = Media::where('uuid', $id)->firstOrFail();
+    } catch ( ModelNotFoundException $m) {
+      $media = Media::where('title', $id)->first();
     }
+    return $media;
   }
 
+  /**
+   * Get a media information response for a single item
+   *
+   * @param Media $media
+   * @return array
+   */
   protected function getMediaInfo(Media $media)
   {
     $data = [

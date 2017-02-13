@@ -11,6 +11,7 @@
           <input id="csvfile" type="file" name="csv" />
           <button type="submit" class="btn btn-primary">Send File</button>
         </form>
+        <div class="has-error">{{ error }}</div>
       </div>
       <div v-else>
         <h1>Upload complete</h1>
@@ -37,6 +38,13 @@
           if ( response.status === 200 ) {
             this.batch = response.data.batch;
           }
+        }).catch((error) => {
+
+          if ( error.response ) {
+            this.error = error.response.data.error;
+          } else {
+            this.error = "Received an unknown error from the API, try again later";
+          }
         });
       }
 
@@ -46,7 +54,8 @@
 
     data: function() {
       return {
-        'batch': false
+        'batch': false,
+        'error': ''
       };
     },
 

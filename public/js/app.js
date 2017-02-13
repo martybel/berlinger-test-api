@@ -12263,6 +12263,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
   methods: {
@@ -12281,6 +12282,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (response.status === 200) {
           _this.batch = response.data.batch;
         }
+      }).catch(function (error) {
+
+        if (error.response) {
+          _this.error = error.response.data.error;
+        } else {
+          _this.error = "Received an unknown error from the API, try again later";
+        }
       });
     }
 
@@ -12290,7 +12298,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   data: function data() {
     return {
-      'batch': false
+      'batch': false,
+      'error': ''
     };
   },
 
@@ -32099,7 +32108,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v("Send File")])])]) : _c('div', [_c('h1', [_vm._v("Upload complete")]), _vm._v(" "), _c('p', [_vm._v("Your file is being processed. You batch id is " + _vm._s(_vm.batch))])])])])])
+  }, [_vm._v("Send File")])]), _vm._v(" "), _c('div', {
+    staticClass: "has-error"
+  }, [_vm._v(_vm._s(_vm.error))])]) : _c('div', [_c('h1', [_vm._v("Upload complete")]), _vm._v(" "), _c('p', [_vm._v("Your file is being processed. You batch id is " + _vm._s(_vm.batch))])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

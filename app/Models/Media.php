@@ -33,7 +33,7 @@ class Media extends Model
         $full     = storage_path($relative);
 
         if (!is_dir(dirname($full))) {
-          mkdir(dirname($full),true,0777);
+          mkdir(dirname($full),0775,true);
         }
 
         $fp = fopen(storage_path($relative),'w');

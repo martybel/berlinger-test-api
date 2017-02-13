@@ -6,6 +6,7 @@
 
 namespace App;
 
+use App\Validators\EmptyHeaderColumnsException;
 use League\Csv\Reader;
 
 /**
@@ -49,6 +50,12 @@ class CSVReader
     $header = $this->reader->fetchOne(0);
     $header = array_map('strtolower',$header);
     $header = array_map('trim',$header);
+
+    $emptyHeaders = array_filter($header,'strlen');
+
+    if ( count($emptyHeaders) != $header ) {
+      throw new EmptyHeaderColumnsException("Your header contains empty elements");
+    }
     return $header;
   }
 

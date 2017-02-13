@@ -111,9 +111,9 @@ class MediaController extends Controller
   protected function getMediaInfo(Media $media)
   {
     $data = [
-      'uuid'  => $media->uuid,
-      'title' => $media->title,
-      'url'   => $media->source,
+      'picture_uuid'  => $media->uuid,
+      'picture_title' => $media->title,
+      'picture_url'   => $media->source,
     ];
 
     foreach ($media->meta()->get() as $meta ) {

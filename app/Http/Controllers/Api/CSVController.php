@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ProcessCSVJob;
 use App\Validators\CSVValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Webpatser\Uuid\Uuid;
 
@@ -41,8 +42,19 @@ class CSVController extends Controller
         $csvTarget = Uuid::generate()->string;
 
         $request->csv->storeAs('csv',$csvTarget . '.csv');
-        $this->dispatch(new ProcessCSVJob($csvTarget));
-        return response(['batch' => $csvTarget],200);
+
+        $job = new ProcessCSVJob($csvTarget);
+
+        if ( App::environment('local')) {
+          $job->handle();
+
+          $status = 'handled';
+        } else {
+          $this->dispatch($job);
+
+          $status = 'pending';
+        }
+        return response(['batch' => $csvTarget, 'status' => $status],200);
       } else {
         return response(['error' => 'Missing required columns', 'error_code' => 'fieldsnotfound'],400);
       }

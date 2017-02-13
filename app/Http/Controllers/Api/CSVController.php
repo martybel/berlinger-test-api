@@ -63,6 +63,11 @@ class CSVController extends Controller
     return response(['error' => 'No file uploaded', 'error_code' => 'missingfile'],400);
   }
 
+  /**
+   * Converts the INI shorthand upload limit to kilobytes
+   * 
+   * @return int
+   */
   protected function getMaxUploadSize()
   {
     $size = ini_get('upload_max_filesize');

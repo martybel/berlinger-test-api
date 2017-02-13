@@ -32006,14 +32006,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.media), function(row) {
     return _c('tr', [_c('td', {
       staticClass: "uuid"
-    }, [_vm._v(_vm._s(row.uuid))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(row.title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(row.url))]), _vm._v(" "), _c('td', [_c('button', {
+    }, [_vm._v(_vm._s(row.picture_uuid))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(row.picture_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(row.picture_url))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-default",
       attrs: {
         "data-toggle": "modal"
       },
       on: {
         "click": function($event) {
-          _vm.showImage(row.uuid)
+          _vm.showImage(row.picture_uuid)
         }
       }
     }, [_vm._v("View")])])])
@@ -42390,7 +42390,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('ul', {
     staticClass: "picture__info"
   }, _vm._l((_vm.info), function(prop, label) {
-    return _c('li', [_c('label', [_vm._v(_vm._s(label))]), _vm._v(" "), (label === 'url') ? _c('a', {
+    return _c('li', [_c('label', [_vm._v(_vm._s(label))]), _vm._v(" "), (label === 'picture_url') ? _c('a', {
       attrs: {
         "href": prop
       }

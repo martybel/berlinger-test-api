@@ -28,10 +28,10 @@
           </thead>
           <tbody>
           <tr v-for="row in media">
-            <td class="uuid">{{ row.uuid }}</td>
-            <td>{{ row.title }}</td>
-            <td>{{ row.url }}</td>
-            <td><button class="btn btn-default" data-toggle="modal" @click="showImage(row.uuid)">View</button></td>
+            <td class="uuid">{{ row.picture_uuid }}</td>
+            <td>{{ row.picture_title }}</td>
+            <td>{{ row.picture_url }}</td>
+            <td><button class="btn btn-default" data-toggle="modal" @click="showImage(row.picture_uuid)">View</button></td>
           </tr>
           </tbody>
         </table>

@@ -13,7 +13,7 @@
           <ul class="picture__info">
             <li v-for="(prop,label) in info">
               <label>{{ label }}</label>
-              <a :href="prop" v-if="label === 'url'">{{ prop }}</a>
+              <a :href="prop" v-if="label === 'picture_url'">{{ prop }}</a>
               <span v-else>{{ prop }}</span>
             </li>
           </ul>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ProcessCSVJob;
 use App\Validators\CSVValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -22,6 +23,14 @@ class CSVController extends Controller
 {
   public function upload(Request $request)
   {
+    $validator = Validator::make($request->all(), [
+      'csv' => 'max:' . $this->getMaxUploadSize()
+    ]);
+
+    if ($validator->fails()) {
+      return response(['error' => 'Your file is too large.', 'error_code' => 'uploadtoolarge'],413);
+    }
+
     $file = $request->file('csv');
 
     if ( $file ) {
@@ -40,5 +49,21 @@ class CSVController extends Controller
     }
 
     return response(['error' => 'No file uploaded', 'error_code' => 'missingfile'],400);
+  }
+
+  protected function getMaxUploadSize()
+  {
+    $size = ini_get('upload_max_filesize');
+
+    $short = strtoupper(substr($size,-1));
+
+    switch ($short) {
+      case 'G': $size = (int)$size * 1024;
+      case 'M': $size = (int)$size * 1024;
+      default:
+        $size = (int)$size;
+    }
+
+    return $size;
   }
 }

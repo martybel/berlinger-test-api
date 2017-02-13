@@ -53,7 +53,7 @@ class CSVReader
 
     $emptyHeaders = array_filter($header,'strlen');
 
-    if ( count($emptyHeaders) != $header ) {
+    if ( count($emptyHeaders) != count($header) ) {
       throw new EmptyHeaderColumnsException("Your header contains empty elements");
     }
     return $header;

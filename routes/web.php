@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('prototype');
 });
 
-Route::group(['namespace' => 'api', 'middleware' => 'api'], function($router) {
+Route::group(['namespace' => 'Api', 'middleware' => 'api'], function($router) {
   $router->post('/1.0/csv/upload', 'CSVController@upload');
   $router->get('/1.0/media', 'MediaController@getAll');
   $router->get('/1.0/media/{uid}','MediaController@getOne');

@@ -39,7 +39,8 @@ class Media extends Model
         $fp = fopen(storage_path($relative),'w');
 
         $ch = curl_init($this->source);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 180);
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 

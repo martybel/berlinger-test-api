@@ -1,9 +1,6 @@
 <html>
   <head>
     <title>Berlinger Picture Test</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="_token" content="{{ csrf_token() }}"/>
-    <script>window.Laravel = { csrfToken: '{{ csrf_token() }}' }</script>
     <link href="css/app.css" type="text/css" rel="stylesheet" />
   </head>
   <body>
